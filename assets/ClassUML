@@ -1,0 +1,231 @@
+@startuml
+
+class Client{
+}
+
+package SecurityLayer {
+package ReduxStateStore{
+    class Provider{
+    }
+    class ReduxReducer{
+    + setLogin
+    + setLogout
+    + apiReducer
+    }
+}
+class Delegate{
+}
+
+package Validator{
+
+class InterceptingValidator {
+}
+
+class AuthenticationValidator {
+ + register()
+ + login()
+}
+
+class AuthorizationValidator {
+ + useSelector(state)
+}
+
+class ParamsValidator {
+}
+}
+}
+
+
+
+package PresentationLayer
+{
+
+class AuthForm {
+  - Login
+  - Register
+}
+
+class UploadForm {
+  - symbol
+  - purchaseDate
+  - purchaseQuantity
+  - purchasePrice
+  + saveTransaction()
+}
+
+class Dashboard {
+}
+
+interface Widget {
+  +render()
+}
+
+
+class PieChart {
+  +render()
+}
+
+class BarChart {
+  +render()
+}
+
+
+class LineChart {
+  +render()
+}
+
+class DataGrid {
+  +render()
+}
+
+Dashboard "1"*--"1" Widget: contains
+
+Widget <|.. BarChart: implements
+Widget <|.. PieChart: implements
+Widget <|.. LineChart: implements
+Widget <|.. DataGrid: implements
+}
+
+package BusinessLayer{
+
+package UserManagement{
+
+class User {
+    - user_id: int
+    - user_name: string
+    - email: string
+    - password: string
+}
+
+interface UserDao {
+   mongoose.UserSchema
+}
+
+interface UserDaoImpl {
+    + saveUser(User user)
+    + findUser(Long id): UserDao
+}
+
+UserDao --> User: uses
+UserDaoImpl ..|> UserDao: implements
+
+}
+
+package TransactionManagement
+{
+class Transaction {
+    - id: string
+    - user_id: string
+    - symbol: string
+    - purchase_date: date
+    - quantity: int
+    - purchase_price: number
+    - value: number
+    - cost: number
+    - price: number
+    - stockReturn: number
+    + stockWeights(OptimizeTransaction): percent
+    + addStock(symbol): void
+    + getStock(symbol): void
+    + removeStock(symbol): void
+    + updateStock(symbol): void
+    + calTransactionValue(symbol value): number
+    + calTransactionReturn(symbol value): number
+}
+
+class OptimizeTransaction {
+    - user_id: int
+    - simulation_id: int
+    - holdings: List<Stock>
+    - stock_weights: List<Stock_Weight>
+    - sharpe_ratio: number
+    - transaction_return: number
+    - transaction_std: number
+    - least_risky: boolean
+    - max_sharpe: boolean
+    - max_returns: boolean
+    + optimize()
+}
+
+interface TransactionDao{
+    mongoose.PorfolioSchema
+}
+
+interface TransactionDaoImpl{
+    + getTransaction(user_id): Transaction
+    + updateTransaction(symbol)
+    + deleteStock(user_id, symbol)
+}
+
+
+TransactionDao --> Transaction: uses
+TransactionDaoImpl ..|> TransactionDao: implements
+}
+
+
+package StockManagement 
+{
+class Performance {
+    - 1DReturn: number 
+    - 5DReturn: number
+    - 1MReturn: number
+    - 1YReturn: number
+    - 10YReturn: number 
+    - max: number 
+}
+
+interface PerformanceDao{
+    mongoose.PerformanceSchema
+}
+
+interface PerformanceDaoImpl{
+    + getPerformance(user_id): Performance
+}
+
+PerformanceDao --> Performance: uses
+PerformanceDaoImpl ..|> PerformanceDao: implements
+}
+
+package CompanyManagement
+{
+class Fundamental {
+    - company_id: int
+    - symbol: string
+    - pe: number
+    - margins: number
+    - valuation: number
+}
+
+interface FundamentalDao{
+    mongoose.FundamentalSchema
+}
+
+interface FundamentalDaoImpl{
+    + getFundamental(symbol:string)
+}
+FundamentalDao --> Fundamental: uses
+FundamentalDaoImpl ..|> FundamentalDao: implements
+}
+}
+
+User "1" *-- "1" Transaction : manages
+OptimizeTransaction "many" --|> "1" Transaction : inherits
+
+Client -d-> Delegate: uses
+Client -d-> AuthForm: access
+Client -d-> UploadForm: access
+Client -d-> Dashboard: access
+
+Delegate ..> InterceptingValidator: invokes
+InterceptingValidator *--> AuthenticationValidator: validates
+AuthenticationValidator ..> UserDaoImpl: invokes
+InterceptingValidator *--> AuthorizationValidator: validates
+InterceptingValidator *--> ParamsValidator: validates
+AuthorizationValidator ..> UserDaoImpl: invokes
+AuthenticationValidator --> ReduxReducer: uses
+AuthorizationValidator --> ReduxReducer: uses
+ParamsValidator ..> TransactionDaoImpl: invokes
+
+PresentationLayer -d-> BusinessLayer: access
+
+@enduml

@@ -16,7 +16,7 @@ const gridTemplateLargeScreen = `
   "p p p p p p"
   "p p p p p p"
   "s s y y z z"
-  "s s s s z z"
+  "s s y y z z"
   "a a a a a a"
   "a a a a a a"
   "a a a a a a"
@@ -92,14 +92,6 @@ const Dashboard = () => {
           <span style={{ color: palette.primary.main, fontWeight: "bold" }}>
             {userName}
           </span>
-        </Typography>
-        <Typography
-          variant="h5"
-          color={palette.grey[300]}
-          align="center"
-          style={{ fontStyle: "italic" }}
-        >
-          find your portfolio below
         </Typography>
       </DashboardBox>
 

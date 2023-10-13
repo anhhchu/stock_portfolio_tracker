@@ -1,8 +1,8 @@
 import DashboardBox from "@/components/DashboardBox";
 import { Box, useMediaQuery, Typography } from "@mui/material";
 import PortfolioTable from "./PortfolioTable";
-import Row2 from "./PerformanceTable";
-import Row3 from "./FundamentalTable";
+import PerformanceTable from "./PerformanceTable";
+import FundamentalTable from "./FundamentalTable";
 import Upload from "./TransactionUpload";
 import { useSelector } from "react-redux";
 import { useGetPortfolioQuery, useGetTransactionQuery } from "@/state/api";
@@ -10,6 +10,8 @@ import { Palette } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import PortfolioTableCollapsible from "./PortfolioTableCollapsible";
 import Welcome from "./Welcome";
+import { useMemo } from "react";
+import BoxHeader from "@/components/BoxHeader";
 
 const gridTemplateLargeScreen = `
   "w w w w w w"
@@ -58,14 +60,25 @@ const Dashboard = () => {
   const userId = useSelector((state) => state.auth.user._id);
   const userName = useSelector((state) => state.auth.user.name);
 
-  const { data: portfolioData } = useGetPortfolioQuery(userId);
+  const { data } = useGetPortfolioQuery(userId);
+  const portfolioData = useMemo(() => data, [data]);
+
   if (!portfolioData) {
     return <Typography sx={{ color: "white" }}>Loading...</Typography>;
   }
 
   const symbols = portfolioData.map((item) => item.symbol);
-  // const uniqueSymbols = [...new Set(symbols)];
   const symbolsString = symbols.join(",");
+  const totalCostBasicSum = portfolioData.reduce(
+    (sum, item) => sum + item.totalCostBasic,
+    0
+  );
+  const totalValueSum = portfolioData.reduce(
+    (sum, item) => sum + item.totalValue,
+    0
+  );
+  const totalGainLoss = (totalValueSum - totalCostBasicSum) ;
+  const totalPercentGainLoss = (totalGainLoss * 100) / totalCostBasicSum;
 
   return (
     <Box
@@ -75,8 +88,8 @@ const Dashboard = () => {
       gap="1.5rem"
       sx={{
         //repeat(3, minmax(370px, 1fr)) -> 3 units on column with size from 370px to 1fr: 1 fractional unit
-        gridTemplateColumns: "repeat(3, minmax(370px, 1fr))",
-        gridTemplateRows: "repeat(20, minmax(60px, 1fr))",
+        gridTemplateColumns: "repeat(6, minmax(60px, 1fr))",
+        gridTemplateRows: "repeat(100, minmax(70px, 1fr))",
         gridTemplateAreas: gridTemplateLargeScreen,
       }}
     >
@@ -95,14 +108,93 @@ const Dashboard = () => {
         </Typography>
       </DashboardBox>
 
+      <DashboardBox gridArea="s">
+        <Box
+          mt="0.25 rem"
+          p="0 0.5rem"
+          display="flex"
+          flexDirection="column"
+          sx={{
+            height: "80%",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h2" align="center" color={palette.grey[300]}>
+            Portfolio Cost Basic
+          </Typography>
+          <Typography
+            variant="h2"
+            align="center"
+            style={{ color: palette.primary.main }}
+          >
+            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostBasicSum)}
+          </Typography>
+        </Box>
+      </DashboardBox>
+
+      <DashboardBox gridArea="y">
+        <Box
+          mt="0.25 rem"
+          p="0 0.5rem"
+          display="flex"
+          flexDirection="column"
+          sx={{
+            height: "80%",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h2" align="center" color={palette.grey[300]}>
+            Portfolio Current Value
+          </Typography>
+          <Typography
+            variant="h2"
+            align="center"
+            style={{ color: palette.primary.main }}
+          >
+            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalValueSum)}
+          </Typography>
+        </Box>
+      </DashboardBox>
+
+
+      <DashboardBox gridArea="z">
+        <Box
+          mt="0.25 rem"
+          p="0 0.5rem"
+          display="flex"
+          flexDirection="column"
+          sx={{
+            height: "80%",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h2" align="center" color={palette.grey[300]}>
+            Portfolio Gain Loss
+          </Typography>
+          <Typography
+            variant="h2"
+            align="center"
+            style={{ color: palette.primary.main }}
+          >
+            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalGainLoss)} | {totalPercentGainLoss.toFixed(2)}% 
+          </Typography>
+        </Box>
+      </DashboardBox>
+
       <Upload userName={userName} />
 
       <PortfolioTableCollapsible
         userName={userName}
         portfolioData={portfolioData}
       />
-      <Row2 symbols={symbolsString} />
-      <Row3 symbols={symbolsString} />
+      <PerformanceTable symbols={symbolsString} />
+      <FundamentalTable symbols={symbolsString} />
     </Box>
   );
 };

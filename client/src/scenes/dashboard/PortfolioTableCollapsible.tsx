@@ -37,6 +37,7 @@ const PortfolioTableCollapsible = ({ userName, portfolioData }) => {
               aria-label="expand row"
               size="small"
               onClick={handleClick}
+              style={{ color: palette.primary.main }}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
@@ -71,7 +72,8 @@ const PortfolioTableCollapsible = ({ userName, portfolioData }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.transaction.map((trans) => (
+                    {console.log('transactions:',row.transaction)}
+                    {[...row.transaction].sort((a, b) => b.date.localeCompare(a.date)).map((trans) => (
                       <TableRow key={trans._id}>
                         <TableCell component="th" scope="row">
                           {trans.date}
@@ -98,7 +100,7 @@ const PortfolioTableCollapsible = ({ userName, portfolioData }) => {
 
   return (
     <DashboardBox gridArea="a">
-      <BoxHeader title={`Portfolio`} sidetext={`Last refreshed: 2023-10-01`} />
+      <BoxHeader title={`Portfolio`} sidetext={`Last refreshed: 2023-10-13`} />
       <Box
         mt="0.25 rem"
         p="0 0.5rem"
@@ -112,7 +114,7 @@ const PortfolioTableCollapsible = ({ userName, portfolioData }) => {
           },
         }}
       >
-        <TableContainer style={{ maxHeight: 480, overflow: 'auto' }}>
+        <TableContainer style={{ maxHeight: 500, overflow: 'auto' }}>
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow style={{ borderBottom: '2px solid white' }}>

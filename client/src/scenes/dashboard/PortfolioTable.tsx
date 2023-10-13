@@ -67,7 +67,7 @@ const PortfolioTable = ({ userName, portfolioData }) => {
       <DashboardBox gridArea="a">
         <BoxHeader
           title={`Portfolio`}
-          sidetext={`Last refreshed: 2023-10-01`}
+          sidetext={`Last refreshed: 2023-10-13`}
         />
 
         <Box

@@ -1,5 +1,5 @@
 import DashboardBox from "@/components/DashboardBox";
-import { useGetFundamentalQuery, useGetTransactionQuery } from "@/state/api";
+import { useGetFundamentalQuery } from "@/state/api";
 import React from "react";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
@@ -10,11 +10,12 @@ import { useSelector } from "react-redux";
 
 type Props = {};
 
-const Row3 = ({ symbols }) => {
+const FundamentalTable = ({ symbols }) => {
   const { palette } = useTheme();
 
-  const { data: fundamentalData } = useGetFundamentalQuery(symbols);
-  //console.log("data:", fundamentalData);
+  const { data } = useGetFundamentalQuery(symbols);
+  const fundamentalData = useMemo(() => data, [data]);
+  
 
   const formatNumber = (value: number) => {
     if (value && value !== "") {
@@ -160,7 +161,7 @@ const Row3 = ({ symbols }) => {
       <DashboardBox gridArea="c">
         <BoxHeader
           title="Fundamental"
-          sidetext={`${fundamentalData?.length} companies`}
+          sidetext={`Last refreshed: 2023-10-13`}
         />
 
         <Box
@@ -208,4 +209,4 @@ const Row3 = ({ symbols }) => {
   );
 };
 
-export default Row3;
+export default FundamentalTable;

@@ -87,7 +87,7 @@ const TransactionTable = ({ userName, transactionData }) => {
       <DashboardBox gridArea="a">
         <BoxHeader
           title={`Transaction`}
-          sidetext={`Last refreshed: 2023-10-01`}
+          sidetext={`Last refreshed: 2023-10-13`}
         />
 
         <Box

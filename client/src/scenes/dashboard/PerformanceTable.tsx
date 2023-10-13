@@ -7,11 +7,11 @@ import { useMemo } from "react";
 import { useTheme } from "@mui/material";
 import BoxHeader from "@/components/BoxHeader";
 
-const Row2 = ({ symbols }) => {
+const PerformanceTable = ({ symbols }) => {
   const { palette } = useTheme();
 
-  const { data: performanceData } = useGetPerformanceQuery(symbols);
-  //console.log("performanceData:", performanceData);
+  const { data } = useGetPerformanceQuery(symbols);
+  const performanceData = useMemo(() => data, [data]);  
 
   const performanceCols: GridColDef[] = [
     {
@@ -104,7 +104,7 @@ const Row2 = ({ symbols }) => {
       <DashboardBox gridArea="b">
         <BoxHeader
           title="Performance"
-          sidetext={`${performanceData?.length} symbols`}
+          sidetext={`Last refreshed: 2023-10-13`}
         />
 
         <Box
@@ -144,4 +144,4 @@ const Row2 = ({ symbols }) => {
   );
 };
 
-export default Row2;
+export default PerformanceTable;

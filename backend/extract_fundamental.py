@@ -21,10 +21,13 @@ def get_symbols(db_name, collection_name, key='Symbol'):
     symbols = [doc[key] for doc in collection.find({})]
     return symbols
 
-fundamentals = ExtractData(API_KEY, client, 'test', 'fundamentals')
+extract_data = ExtractData(API_KEY, client, 'test')
 
 symbols = get_symbols('test', 'companies')
 completed = get_symbols('test', 'fundamentals', 'symbol')
 
 incompleted = set(symbols) - set(completed)
 print(len(incompleted))
+
+for symbol in incompleted:
+    extract_data.extract_fundamental(symbol)

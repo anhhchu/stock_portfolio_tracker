@@ -59,7 +59,7 @@ To install the required libraries for both the server and client, follow these s
     * Table 1: Portfolio Return: A table that lists the following information for each
     stock in the portfolio: stock ticker, number of shares, cost per share, total cost,
     current price per share, total value, and return per stock.
-    * Table 2 : Stock Performance: A line chart that show each stock return across
+    * Table 2 : Stock Performance: A table that show each stock return across
     different time period from 1D to 10Y Return
     * Table 3: Fundamental KPIs: A table that shows the fundamental financial key
     performance indicators (KPIs) of each company in the portfolio. The KPIs may

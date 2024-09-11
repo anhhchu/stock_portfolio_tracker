@@ -26,9 +26,9 @@ const BoxHeader = ({ icon, title, substitle, sidetext }: Props) => {
       </FlexBetween>
       <Typography variant="h5" fontWeight="200" align="right" color={palette.secondary[500]}>
         {sidetext}
-        <IconButton color="secondary" aria-label="refresh" component="span">
+        {/* <IconButton color="secondary" aria-label="refresh" component="span">
           <RefreshIcon />
-        </IconButton>
+        </IconButton> */}
       </Typography>
       
     </FlexBetween>

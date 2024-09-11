@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { GetTransactionResponse, GetFundamentalResponse, GetPerformanceResponse, GetCompanyResponse, GetPortfolioResponse } from "./types";
-import { useSelector } from "react-redux";
 // Redux Toolkit query
-
 
 export const api = createApi({
     baseQuery: fetchBaseQuery( { baseUrl: import.meta.env.VITE_BASE_URL,  

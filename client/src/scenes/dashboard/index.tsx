@@ -16,22 +16,15 @@ import BoxHeader from "@/components/BoxHeader";
 const gridTemplateLargeScreen = `
   "w w w w w w"
   "p p p p p p"
-  "p p p p p p"
-  "s s y y z z"
   "s s y y z z"
   "a a a a a a"
   "a a a a a a"
   "a a a a a a"
   "a a a a a a"
   "a a a a a a"
-  "a a a a a a"
-  "a a a a a a"
   "b b b b b b"
   "b b b b b b"
   "b b b b b b"
-  "b b b b b b"
-  "b b b b b b"
-  "c c c c c c"
   "c c c c c c"
   "c c c c c c"
   "c c c c c c"
@@ -121,11 +114,11 @@ const Dashboard = () => {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h2" align="center" color={palette.grey[300]}>
+          <Typography variant="h4" align="center" color={palette.grey[300]}>
             Portfolio Cost Basic
           </Typography>
           <Typography
-            variant="h2"
+            variant="h4"
             align="center"
             style={{ color: palette.primary.main }}
           >
@@ -147,11 +140,11 @@ const Dashboard = () => {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h2" align="center" color={palette.grey[300]}>
+          <Typography variant="h4" align="center" color={palette.grey[300]}>
             Portfolio Current Value
           </Typography>
           <Typography
-            variant="h2"
+            variant="h4"
             align="center"
             style={{ color: palette.primary.main }}
           >
@@ -174,11 +167,11 @@ const Dashboard = () => {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h2" align="center" color={palette.grey[300]}>
+          <Typography variant="h4" align="center" color={palette.grey[300]}>
             Portfolio Gain Loss
           </Typography>
           <Typography
-            variant="h2"
+            variant="h4"
             align="center"
             style={{ color: palette.primary.main }}
           >

@@ -36,7 +36,7 @@ router.post("/portfolio/:userId", verifyToken, async(req, res) => {
     };
 });
 
-
+export default router;
 // router.delete("/portfolio/:userId", verifyToken, async(req, res) => {
 //     try {
 //         if (!req.params.userId) {
@@ -53,4 +53,3 @@ router.post("/portfolio/:userId", verifyToken, async(req, res) => {
 //     }
 // });
 
-export default router;

@@ -16,7 +16,6 @@ const Upload = ( {userName}) => {
     <>
       <DashboardBox gridArea="p">
 
-
         <Box
           mt="1 rem"
           p="0 1rem"

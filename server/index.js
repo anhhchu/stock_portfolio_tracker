@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>");
+  res.send("<h1>Portfolio Tracker Backend</h1>");
 });
 
 
@@ -44,11 +44,11 @@ import fundamentalRoutes from "./routes/fundamental.js";
 import companyRoutes from "./routes/company.js";
 import authRoutes from "./routes/auth.js";
 /* Import Controllers and middleware */
-import { register } from "./controllers/auth.js";
+// import { register } from "./controllers/auth.js";
 import { verifyToken } from "./middleware/verifyToken.js";
 
 /* AUTH ROUTE */
-app.post("/auth/register", register);
+// app.post("/auth/register", register);
 app.use("/auth", authRoutes)
 
 /* GET ROUTE */

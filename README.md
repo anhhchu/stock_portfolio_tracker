@@ -23,7 +23,9 @@ To install the required libraries for both the server and client, follow these s
 ## Start the application in development
 
 1. Open your terminal.
-2. Navigate to the server directory and Run the development server::
+2. Navigate to the server directory:
+    * Provide the Environment variable in .env_template file and rename to .env file
+    * Run below commands
    ```bash
    cd server
    npm run dev
